@@ -1,0 +1,538 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERPOLATION</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000; /* Black background */
+            color: white; /* White text */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        header {
+            background-color: #1a1a1a; /* Dark grey header */
+            width: 100%;
+            padding: 1em 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+        
+        .container {
+            display: flex;
+            width: 85%;
+            margin: 30px auto;
+            gap: 20px;
+        }
+        
+        .questions {
+            flex: 1;
+            background-color: #1f1f1f; /* Dark grey for questions */
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.3em;
+            border: 2px solid #00ffcc; /* Cyan border */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .questions li {
+            font-size: 1em;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        
+        .code-output {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            gap: 20px;
+        }
+        
+        .code-frame, .output-frame {
+            background-color: #1f1f1f; /* Dark grey for code output */
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #00ffcc; /* Cyan border */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            font-size: 1.2em;
+            overflow: hidden;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 500px; /* Set fixed height for textarea */
+            background-color: #2c2c2c; /* Dark grey */
+            color: white; /* White text */
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            resize: none; /* Prevent resizing */
+            font-family: 'Courier New', Courier, monospace;
+            overflow: auto;
+            outline: none;
+            box-sizing: border-box; /* Include padding in height */
+        }
+        
+        a {
+            color: white; /* White links */
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        h2 {
+            color: white; /* White headers */
+        }
+        
+        .tabs {
+            display: flex;
+            margin: 20px 0;
+            border-bottom: 2px solid #00ffcc; /* Cyan border for tabs */
+        }
+        
+        .tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+            font-size: 1em;
+            border: 2px solid transparent;
+            border-top: 2px solid #00ffcc; /* Cyan */
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab:hover {
+            background-color: #00b3a3; /* Darker cyan on hover */
+            border-color: #00ffcc; /* Cyan border on hover */
+        }
+        
+        footer {
+            margin-top: auto;
+            background-color: #1a1a1a; /* Dark grey footer */
+            color: white; /* White text */
+            width: 100%;
+            text-align: center;
+            padding: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>INTERPOLATION</h1>
+        <div class="tabs">
+            <div class="tab" onclick="location.href='conversion.html'"><b>CONVERSION</b></div>
+            <div class="tab" onclick="location.href='non linear.html'"><b>NON LINEAR EQUATIONS</b></div>
+            <div class="tab" onclick="location.href='linear.html'"><b>LINEAR EQUATIONS</b></div>
+            <div class="tab" onclick="location.href='interpolation.html'"><b>INTERPOLATION</b></div>
+            <div class="tab" onclick="location.href='numerical integration.html'"><b>NUMERICAL INTEGRATION</b></div>
+            <div class="tab" onclick="location.href='approximation.html'"><b>APPROXIMATION</b></div>
+<div class="tab" onclick="location.href='differential.html'"><b>ORDINARY DIFFERENTIAL EQUATIONS</b></div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="questions">
+            <h2>Questions</h2>
+            <ol>
+                <li onclick="toggleCode(0)">LANGRANGES INTERPOLATION</li>
+                <li onclick="toggleCode(1)">LANGRANGES INVERSE INTERPOLATION</li>
+                <li onclick="toggleCode(2)">NEWTON ' S FORWARD DIFFERENCE</li>
+                <li onclick="toggleCode(3)">NEWTON ' S BACKWARD DIFFERENCE</li>
+                <li onclick="toggleCode(4)">NEWTON ' S DIVIDED DIFFERENCE</li>
+            </ol>
+        </div>
+
+        <div class="code-output" id="code-output-0">
+            <div class="code-frame">
+                <h2>1. Code</h2>
+                <textarea readonly>            
+//1.Lagranges Interpolation Method
+
+#include<stdio.h>
+int main()
+{
+  float x[100], y[100], x_p, y_p=0, p;
+  int i,j,num;
+  
+  printf("Enter number of data: ");
+  scanf("%d", &num);
+  printf("Enter data:\n");
+  for(i=1;i<=num;i++)
+  {
+    printf("x[%d] = ", i);
+    scanf("%f", &x[i]);
+    printf("y[%d] = ", i);
+    scanf("%f", &y[i]);
+  }
+  printf("Enter interpolation point: ");
+  scanf("%f", &x_p);
+  for(i=1;i<=num;i++)
+  {
+    p=1;
+    for(j=1;j<=num;j++)
+    {
+      if(i!=j)
+      {
+        p = p* (x_p - x[j])/(x[i] - x[j]);
+      }
+    }
+    y_p = y_p + p * y[i];
+  }
+  printf("Interpolated value at %f is %f", x_p, y_p);
+}
+                </textarea>
+            </div>
+            <div class="output-frame">
+                <h2>Output</h2>
+                <textarea readonly>
+Enter number of data: 6
+Enter data:
+x[1] = 0
+y[1] = 1
+x[2] = 1
+y[2] = 14
+x[3] = 2
+y[3] = 15
+x[4] = 4
+y[4] = 5
+x[5] = 5
+y[5] = 6
+x[6] = 6
+y[6] = 19
+Enter interpolation point: 3
+Interpolated value at 3.000000 is 10.000000
+                </textarea>
+            </div>
+        </div>
+
+        <div class="code-output" id="code-output-1">
+            <div class="code-frame">
+                <h2>2. Code</h2>
+                <textarea readonly>
+//2.LANGRANGES INVERSE INTERPOLATION METHOD
+#include <stdio.h>
+
+float inverse_ip(float x[], float  y[], int n, float  yi) {
+    float xi = 0.0;
+
+    for (int i = 0; i < n; i++) {
+        float  term = x[i];
+        for (int j = 0; j < n; j++) {
+            if (j != i) {
+                term = term * (yi - y[j]) / (y[i] - y[j]);
+            }
+        }
+        xi += term;
+    }
+
+    return xi;
+}
+
+int main() {
+    int n,i;
+    printf("Enter the number of data points: ");
+    scanf("%d", &n);
+
+    float  x[n], y[n];
+    printf("ENTER THE ELEMENTS OF x\n");
+    for(i=1;i<=n;i++)
+    {
+        scanf("%f",&x[i]);
+    }
+    printf("ENTER THE ELEMENTS OF y\n");
+    for(i=1;i<=n;i++)
+    {
+      scanf("%f",&y[i]);
+
+    }
+    float  yi;
+    printf("Enter the interpolation value (y): ");
+    scanf("%f", &yi);
+
+    float xi = inverse_ip(x, y, n, yi);
+    printf("Interpolated value at y = %f is x = %f\n", yi, xi);
+
+}
+                </textarea>
+            </div>
+            <div class="output-frame">
+                <h2>Output</h2>
+                <textarea readonly>
+Enter the number of data points: 4
+ENTER THE ELEMENTS OF x
+20
+25
+30
+35
+ENTER THE ELEMENTS OF y
+0.342
+0.423
+0.5
+0.650
+Enter the interpolation value (y): 0.390
+Interpolated value at y = 0.390000 is x = 22.933647
+                </textarea>
+            </div>
+        </div>
+
+        <div class="code-output" id="code-output-2">
+            <div class="code-frame">
+                <h2>3. Code</h2>
+                <textarea readonly>
+//3. Newton’s Forward Difference Method
+#include<stdio.h>
+#include<math.h>
+ int main()
+ {
+     float h,f,p,d,s;
+     int i,j,n;
+     printf("ENTER THE NUMBER OF DATA: ");
+     scanf("%d",&n);
+     float x[n],y[n];
+     printf("ENTER THE ELEMENTS OF x\n");
+    for(i=1;i<=n;i++)
+    {
+        scanf("%f",&x[i]);
+    }
+    printf("ENTER THE ELEMENTS OF y\n");
+    for(i=1;i<=n;i++)
+    {
+      scanf("%f",&y[i]);
+
+    }
+    h=x[2]-x[1];
+    printf("ENTER THE VALUE OF x : ");
+    scanf("%f",&f);
+    p=1;
+    d=y[1];
+    s=(f-x[1])/h;
+    for(int i=1;i<=n-1;i++)
+    {
+        for(int j=1;j<=(n-i);j++)
+        {
+            y[j]=y[j+1]-y[j];
+
+        }
+        p=p*(s-i+1)/i;
+        d=d+p*y[1];
+
+    }
+    printf("FOR THE VALUE OF x(%f) THE VALUE OF y IS %f",f,d);
+ }
+                </textarea>
+            </div>
+            <div class="output-frame">
+                <h2>Output</h2>
+                <textarea readonly>
+ENTER THE NUMBER OF DATA: 4
+ENTER THE ELEMENTS OF x
+20
+25
+30
+35
+ENTER THE ELEMENTS OF y
+0.34
+0.42
+0.5
+0.65
+ENTER THE VALUE OF x : 22
+FOR THE VALUE OF x(22.000000) THE VALUE OF y IS 0.376480
+                </textarea>
+            </div>
+        </div>
+
+        <div class="code-output" id="code-output-3">
+            <div class="code-frame">
+                <h2>4. Code</h2>
+                <textarea readonly>
+//4.Newton’s Backward Difference Method
+#include<stdio.h>
+ #include<math.h>
+ int main()
+ {
+     float h,f,p,d,s;
+     int i,j,n;
+     printf("ENTER THE NUMBER OF DATA: ");
+     scanf("%d",&n);
+     float x[n],y[n];
+     printf("ENTER THE ELEMENTS OF x\n");
+    for(i=1;i<=n;i++)
+    {
+        scanf("%f",&x[i]);
+    }
+    printf("ENTER THE ELEMENTS OF y\n");
+    for(i=1;i<=n;i++)
+    {
+      scanf("%f",&y[i]);
+
+    }
+    h=x[2]-x[1];
+    printf("ENTER THE VALUE OF x:\n ");
+    scanf("%f",&f);
+    p=1;
+    d=y[1];
+    s=(f-x[1])/h;
+    for(int i=1;i<=n-1;i++)
+    {
+        for(int j=1;j<=(n-i);j++)
+        {
+            y[j]=y[j+1]-y[j];
+
+        }
+        p=p*(s-i+1)/i;
+        d=d+p*y[1];
+
+    }
+    printf("FOR THE VALUE OF x(%f) THE VALUE OF y IS %f",f,d);
+ }
+
+                </textarea>
+            </div>
+            <div class="output-frame">
+                <h2>Output</h2>
+                <textarea readonly>
+ENTER THE NUMBER OF DATA: 8
+ENTER THE ELEMENTS OF x
+1
+2
+3
+4
+5
+6
+7
+8
+ENTER THE ELEMENTS OF y
+1
+8
+27
+64
+125
+216
+343
+512
+ENTER THE VALUE OF x:
+ 7.5
+FOR THE VALUE OF x(7.500000) THE VALUE OF y IS 421.875000
+                </textarea>
+            </div>
+        </div>
+
+        <div class="code-output" id="code-output-4">
+            <div class="code-frame">
+                <h2>5. Code</h2>
+                <textarea readonly>
+//5.Newton Divided Difference Method
+#include<stdio.h>
+
+int main() 
+{
+    int n, i, j;
+    float x[10], y[10][10], value, sum, term;
+    printf("Enter the number of data points: ");
+    scanf("%d", &n);
+    printf("Enter the values of x:\n");
+    for (i = 0; i < n; i++) 
+    {
+        scanf("%f", &x[i]);
+    }
+    
+    printf("Enter the values of y:\n");
+    for (i = 0; i < n; i++) 
+    {
+        scanf("%f", &y[i][0]);
+    }
+    for (j = 1; j < n; j++) 
+    {
+        for (i = 0; i < n - j; i++) 
+        {
+            y[i][j] = (y[i + 1][j - 1] - y[i][j - 1]) / (x[i + j] - x[i]);
+        }
+    }
+
+    printf("\nEnter the value of x to interpolate: ");
+    scanf("%f", &value);
+    
+    sum = y[0][0];
+    for (j = 1; j < n; j++) 
+    {
+        term = y[0][j];
+        for (i = 0; i < j; i++) 
+        {
+            term *= (value - x[i]);
+        }
+        sum += term;
+    }
+    
+    printf("\nInterpolated value at x = %f is %f\n", value, sum);
+}
+                </textarea>
+            </div>
+            <div class="output-frame">
+                <h2>Output</h2>
+                <textarea readonly>
+Enter the number of data points: 6
+Enter the values of x:
+0
+1
+2
+4
+5
+6
+Enter the values of y:
+1
+14
+15
+5
+6
+19
+
+Enter the value of x to interpolate: 3
+
+Interpolated value at x = 3.000000 is 10.000000
+                </textarea>
+            </div>
+        </div>
+
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 My Stylish Website. All rights reserved.</p>
+        <a href="conmindex.html">Back to Home</a>
+    </footer>
+
+    <script>
+        function toggleCode(index) {
+            const codeOutput = document.getElementById(`code-output-${index}`);
+            const isVisible = codeOutput.style.display === "flex";
+            
+            // Hide all code outputs first
+            const allOutputs = document.querySelectorAll('.code-output');
+            allOutputs.forEach(output => output.style.display = "none");
+            
+            // Toggle visibility of the selected output only if it was not already visible
+            if (!isVisible) {
+                codeOutput.style.display = "flex";
+            }
+        }
+
+        // Initially hide all code outputs
+        document.querySelectorAll('.code-output').forEach(output => {
+            output.style.display = "none";
+        });
+    </script>
+</body>
+</html>
